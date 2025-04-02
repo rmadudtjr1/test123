@@ -46,19 +46,3 @@ jobs:
         script: |
           mv ~/tomcat/webapps/project/target/project-1.war ~/tomcat/webapps/
        
-          echo "Stopping Tomcat..."
-          PID=$(ps aux | grep '[t]omcat' | awk '{print $2}')
-          if [ ! -z "$PID" ]; then
-            kill -9 $PID
-          fi
-          sleep 5
-          
-          echo "Deploying WAR file..."
-          mv ~/tomcat/webapps/project-1.war ~/tomcat/webapps/ROOT.war
-
-          echo "Starting Tomcat..."
-          ~/tomcat/bin/startup.sh
-          
-          echo "Checking Tomcat status..."
-          sleep 10
-          curl -I http://localhost:8080 || echo "Tomcat is not responding!"
