@@ -37,6 +37,11 @@ jobs:
         source: "project/target/project-1.war"
         target: "~/tomcat/webapps/"
 
+    - name: Move War File
+      run: |
+        mv ~/tomcat/webapps/project/target/project-1.war ~/tomcat/webapps/
+        rm -rf ~/tomcat/webapps/project
+        
     - name: Restart Tomcat
       uses: appleboy/ssh-action@v0.1.4
       with:
