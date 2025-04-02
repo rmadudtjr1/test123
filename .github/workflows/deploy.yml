@@ -52,5 +52,5 @@ jobs:
         script: |
           ~/tomcat/bin/shutdown.sh || true
           sleep 5
-          rm -rf ~/tomcat/webapps/project-1  # 기존 폴더 삭제
+          rm -rf ~/tomcat/webapps/project  # 기존 폴더 삭제
           ~/tomcat/bin/startup.sh
