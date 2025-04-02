@@ -22,21 +22,12 @@ jobs:
     - name: Build with Maven
       run: mvn clean package -DskipTests
 
-    - name: Transfer JAR file to EC2
+    - name: Transfer WAR file to EC2
       uses: appleboy/scp-action@v0.1.4
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: "target/*.jar"
-        target: "~/app/"
+        source: "target/your-app.war"
+        target: "~/tomcat/webapps/"
 
-    - name: Restart Spring Boot Application
-      uses: appleboy/ssh-action@v0.1.4
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          pkill -f 'java -jar' || true
-          nohup java -jar ~/app/*.jar > ~/app/app.log 2>&1 &
