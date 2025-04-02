@@ -45,7 +45,7 @@ jobs:
           script: |
             rm -rf ~/tomcat/webapps/project ~/tomcat/webapps/project.war
             sleep 5
-            mv ~/*.war ~/tomcat/webapps/
+            mv ~/project/target/*.war ~/tomcat/webapps/
             ~/tomcat/bin/shutdown.sh || true
             
             sleep 5            
