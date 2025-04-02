@@ -44,11 +44,5 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          ~/tomcat/bin/shutdown.sh || true
-          sleep 5
-          rm -rf ~/tomcat/webapps/project
-          mv ~/tomcat/webapps/project-1.war ~/tomcat/webapps/ROOT.war
-          ~/tomcat/bin/startup.sh
-          sleep 10
-          curl -I http://localhost:8080 || echo "Tomcat is not responding!"
+          sudo touch a.txt
        
