@@ -31,7 +31,10 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           source: project/target/*.war
           target: ~/tomcat/webapps/
-
+          
+      - name: Rename WAR file
+        run: mv project/target/*.war project/target/project.war
+        
       - name: Restart Tomcat
         uses: appleboy/ssh-action@master
         with:
