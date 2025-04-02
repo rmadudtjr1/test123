@@ -41,5 +41,5 @@ jobs:
           script: |
             ~/tomcat/bin/shutdown.sh || true
             sleep 5
-            rm -rf ~/tomcat/webapps/project-1.war
+            rm -rf ~/tomcat/webapps/project-1
             ~/tomcat/bin/startup.sh
