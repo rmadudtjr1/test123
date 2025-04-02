@@ -45,5 +45,6 @@ jobs:
             mv ~/tomcat/webapps/project/target/*.war ~/tomcat/webapps/
             sleep 5
             ~/tomcat/bin/shutdown.sh || true
+            rm -rf ~/tomcat/webapps/project
             sleep 5            
             ~/tomcat/bin/startup.sh
