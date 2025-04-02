@@ -37,16 +37,6 @@ jobs:
         source: "project/target/project-1.war"
         target: "~/tomcat/webapps/"
 
-    - name: Move War File
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-            mv ~/tomcat/webapps/project/target/project-1.war ~/tomcat/webapps/
-            rm -rf ~/tomcat/webapps/project
-        
     - name: Restart Tomcat
       uses: appleboy/ssh-action@v0.1.4
       with:
@@ -54,6 +44,8 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
+          mv ~/tomcat/webapps/project/target/project-1.war ~/tomcat/webapps/
+       
           echo "Stopping Tomcat..."
           PID=$(ps aux | grep '[t]omcat' | awk '{print $2}')
           if [ ! -z "$PID" ]; then
