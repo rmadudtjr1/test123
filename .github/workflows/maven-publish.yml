@@ -40,6 +40,5 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             ~/tomcat/bin/shutdown.sh || true
-            sleep 5
-            rm -rf ~/tomcat/webapps/project-1
+            sleep 5            
             ~/tomcat/bin/startup.sh
