@@ -39,6 +39,8 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            mv ~/tomcat/webapps/project/target/*.war ~/tomcat/webapps/
+            sleep 5
             ~/tomcat/bin/shutdown.sh || true
             sleep 5            
             ~/tomcat/bin/startup.sh
