@@ -31,3 +31,14 @@ jobs:
         source: "target/your-app.war"
         target: "~/tomcat/webapps/"
 
+    - name: Restart Tomcat
+      uses: appleboy/ssh-action@v0.1.4
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          ~/tomcat/bin/shutdown.sh || true
+          sleep 5
+          rm -rf ~/tomcat/webapps/your-app  # 기존 폴더 삭제
+          ~/tomcat/bin/startup.sh
