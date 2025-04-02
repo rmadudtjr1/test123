@@ -5,7 +5,7 @@ public class BoardController {
 	
 	}
 	public void abc() {
-		System.out.println("ְַּֿ");
+		System.out.println("ם•˜ל´");
 	}
 	public void zzz () {
 		
