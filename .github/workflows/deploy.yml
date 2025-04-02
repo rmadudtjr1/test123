@@ -30,7 +30,7 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: "target/your-app.war"
+        source: "target/project1.war"
         target: "~/tomcat/webapps/"
 
     - name: Restart Tomcat
@@ -42,5 +42,5 @@ jobs:
         script: |
           ~/tomcat/bin/shutdown.sh || true
           sleep 5
-          rm -rf ~/tomcat/webapps/your-app  # 기존 폴더 삭제
+          rm -rf ~/tomcat/webapps/project1  # 기존 폴더 삭제
           ~/tomcat/bin/startup.sh
