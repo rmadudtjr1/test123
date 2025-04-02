@@ -36,6 +36,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         source: "project/target/project-1.war"
         target: "~/tomcat/webapps/"
+        overwrite: true  # 기존 파일 덮어쓰기 옵션
     
     - name: Restart Tomcat
       uses: appleboy/ssh-action@v0.1.4
