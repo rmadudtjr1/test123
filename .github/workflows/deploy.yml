@@ -27,6 +27,13 @@ jobs:
     - name: Check if WAR file exists
       run: |
         ls -la project/target/
+    
+    - name: Add SSH Key and Set Permissions
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/github-action-key
+        chmod 600 ~/.ssh/github-action-key
+        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
         
     - name: Transfer WAR file to EC2
       uses: appleboy/scp-action@v0.1.4
