@@ -33,7 +33,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           source: project/target/*.war
-          target: ~/tomcat/webapps/
+          target: ~/
           overwrite: true
                   
       - name: Restart Tomcat
@@ -43,9 +43,10 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            mv ~/tomcat/webapps/project/target/*.war ~/tomcat/webapps/
+            rm -rf ~/tomcat/webapps/project ~/tomcat/webapps/project.war
             sleep 5
+            mv ~/*.war ~/tomcat/webapps/
             ~/tomcat/bin/shutdown.sh || true
-            rm -rf ~/tomcat/webapps/project
+            
             sleep 5            
             ~/tomcat/bin/startup.sh
