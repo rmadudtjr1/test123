@@ -35,8 +35,8 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         source: "project/target/project-1.war"
-        target: "~/tomcat/webapps"
-
+        target: "~/tomcat/webapps/"
+    
     - name: Restart Tomcat
       uses: appleboy/ssh-action@v0.1.4
       with:
@@ -44,5 +44,11 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          mv ~/tomcat/webapps/project/target/project-1.war ~/tomcat/webapps/
+          ~/tomcat/bin/shutdown.sh || true
+          sleep 5
+          rm -rf ~/tomcat/webapps/project
+          mv ~/tomcat/webapps/project-1.war ~/tomcat/webapps/ROOT.war
+          ~/tomcat/bin/startup.sh
+          sleep 10
+          curl -I http://localhost:8080 || echo "Tomcat is not responding!"
        
