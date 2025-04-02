@@ -23,16 +23,18 @@ jobs:
       run: |
         cd project
         mvn clean package -DskipTests
+        
     - name: Check if WAR file exists
       run: |
         ls -la project/target/
+        
     - name: Transfer WAR file to EC2
       uses: appleboy/scp-action@v0.1.4
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: "project/target/project1.war"
+        source: "project/target/project-1.war"
         target: "~/tomcat/webapps/"
 
     - name: Restart Tomcat
@@ -44,5 +46,5 @@ jobs:
         script: |
           ~/tomcat/bin/shutdown.sh || true
           sleep 5
-          rm -rf ~/tomcat/webapps/project1  # 기존 폴더 삭제
+          rm -rf ~/tomcat/webapps/project-1  # 기존 폴더 삭제
           ~/tomcat/bin/startup.sh
