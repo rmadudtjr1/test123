@@ -5,6 +5,7 @@ public class BoardController {
 		System.out.println("hello");
 	}
 	public void abc() {
+		
 	}
 	public void zzz () {
 		
