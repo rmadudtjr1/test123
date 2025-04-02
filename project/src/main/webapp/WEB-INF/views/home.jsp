@@ -9,10 +9,10 @@
 <h1>
 	Hello world! project!!!!!
 	whele adfdfadf  testestet
+	네가 죽을것 같다
 </h1>
 <h1>하이</h1>
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
-    - name: Debug SSH Connection
-      run: ssh -v -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "echo Connected!"
+    
