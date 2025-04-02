@@ -36,7 +36,13 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         source: "project/target/project-1.war"
         target: "~/tomcat/webapps/"
-
+        
+    - name: Set up SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        
     - name: Restart Tomcat
       uses: appleboy/ssh-action@v0.1.4
       with:
