@@ -1,49 +1,39 @@
-name: Deploy Springframework App to EC2
+name: Deploy Spring WAR to EC2
 
 on:
   push:
     branches:
-      - master
+      - master # main 브랜치에 push 될 때 실행
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '11'
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
 
-    - name: Build with Maven
-      run: |
-        cd project
-        mvn clean package -DskipTests
+      - name: Build with Maven
+        run: mvn clean package
 
-    - name: Check if WAR file exists
-      run: |
-        ls -la project/target/
+      - name: Copy WAR to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          source: project/target/*.war
+          target: ~/tomcat9/webapps/
 
-    - name: Transfer WAR file to EC2
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        source: "project/target/project-1.war"
-        target: "~/tomcat/webapps/"
-        overwrite: true  # 기존 파일 덮어쓰기 옵션
-    
-    - name: Restart Tomcat
-      uses: appleboy/ssh-action@v0.1.4
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          ls ~
-       
+      - name: Restart Tomcat
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: ~/tomcat/bin/startup.sh
